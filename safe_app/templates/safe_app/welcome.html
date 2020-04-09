@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Safe App Quiz Clone</title>
+</head>
+<body>
+
+<h1>Login only for Pre-registered Instructors (needs to be added by admin)</h1>
+
+<form action="{% url 'safe_app:course' %}" method="post">
+{% csrf_token %}
+	<label for="loignId"><b>Username</b></label><br>
+	<input type="text" placeholder="Enter Username" name="loginId" required><br>
+	<label for="password"><b>Password</b></label><br>
+	<input type="password" placeholder="Enter Password" name="password" required><br>
+	<button type="submit">Login</button>
+</form>
+
+{% if show %}
+	<p>Login Unsuccessful</p>
+{% endif %}
+
+</body>
+</html>

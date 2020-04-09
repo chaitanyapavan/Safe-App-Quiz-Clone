@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Safe App Quiz Clone</title>
+	<style type="text/css">
+		.remove {
+		  font: bold 11px Arial;
+		  text-decoration: none;
+		  background-color: #EEEEEE;
+		  color: #333333;
+		  padding: 2px 6px 2px 6px;
+		  border-top: 1px solid #CCCCCC;
+		  border-right: 1px solid #333333;
+		  border-bottom: 1px solid #333333;
+		  border-left: 1px solid #CCCCCC;
+		}
+	</style>
+</head>
+<body>
+<b>Running Quizes</b><br><br>
+	{% for quiz in running %}
+		<a href="{% url 'safe_app:questions' quiz.id %}">{{quiz.quiz_code}}</a> &nbsp
+		<a href="{% url 'safe_app:changequizstate' quiz.id %}" class="remove">Halt Quiz</a> &nbsp
+		<a href="{% url 'safe_app:removequiz' quiz.id %}" class="remove">Remove Quiz</a><br><br>
+	{% endfor %}
+<br>
+<b>Halted Quizes</b><br><br>
+	{% for quiz in halted %}
+		<a href="{% url 'safe_app:questions' quiz.id %}">{{quiz.quiz_code}}</a> &nbsp
+		<a href="{% url 'safe_app:changequizstate' quiz.id %}" class="remove">Run Quiz</a> &nbsp
+		<a href="{% url 'safe_app:removequiz' quiz.id %}" class="remove">Remove Quiz</a><br><br>
+	{% endfor %}
+<br>
+
+<form action="{% url 'safe_app:addquiz' course.id %}" method="post">
+{% csrf_token %}
+	<label for="quiz_code"><b>Add New Quiz</b></label> &nbsp
+	<input type="text" placeholder="Enter Quiz Code" name="quiz_code" required> &nbsp
+	<button type="submit">Add</button>
+</form>
+</body>

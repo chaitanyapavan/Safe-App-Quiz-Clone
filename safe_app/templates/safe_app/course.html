@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Safe App Quiz Clone</title>
+	<style type="text/css">
+		#remove {
+		  font: bold 11px Arial;
+		  text-decoration: none;
+		  background-color: #EEEEEE;
+		  color: #333333;
+		  padding: 2px 6px 2px 6px;
+		  border-top: 1px solid #CCCCCC;
+		  border-right: 1px solid #333333;
+		  border-bottom: 1px solid #333333;
+		  border-left: 1px solid #CCCCCC;
+		}
+	</style>
+</head>
+
+<h2>Courses for you</h2>
+<body>
+	{% for course in courses %}
+		<a href="{% url 'safe_app:quiz' course.id %}">{{course.course_code}}</a>  &nbsp
+		<a href="{% url 'safe_app:removecourse' course.id %}" id="remove">Remove Course</a><br><br>
+	{% endfor %}
+
+<form action="{% url 'safe_app:addcourse' %}" method="post">
+{% csrf_token %}
+	<label for="course_code"><b>Add New Course</b></label> &nbsp
+	<input type="text" placeholder="Enter Course Code" name="course_code" required> &nbsp
+	<button type="submit">Add</button>
+</form>
+</body>

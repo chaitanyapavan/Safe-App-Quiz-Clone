@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Safe App Quiz Clone</title>
+	<style type="text/css">
+		p.detail { color:#4C4C4C;font-weight:bold;font-family:Calibri;font-size:20 }
+		span.name { color:#FF0000;font-weight:bold;font-family:Tahoma;font-size:20 }
+	</style>
+</head>
+<body>
+	<p class="detail">Question &nbsp<span class="name">{{question.question_number}}</span> </p>
+
+	<form action="{% url 'safe_app:savequestion' question.question_number %}" method="post">
+	{% csrf_token %}
+		<textarea rows="7" cols="70" name="text">{{text}}</textarea> <br>
+		{% if show %}
+			<textarea rows="2" cols="70" name="option1">{{option1}}</textarea> <br>
+			<textarea rows="2" cols="70" name="option2">{{option2}}</textarea> <br>
+			<textarea rows="2" cols="70" name="option3">{{option3}}</textarea> <br>
+			<textarea rows="2" cols="70" name="option4">{{option4}}</textarea> <br>
+		{% endif %}
+		<button type="submit">Save</button>
+	</form>
+</body>

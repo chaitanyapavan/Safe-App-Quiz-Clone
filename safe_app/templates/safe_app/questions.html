@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Safe App Quiz Clone</title>
+	<style type="text/css">
+		.remove {
+		  font: bold 11px Arial;
+		  text-decoration: none;
+		  background-color: #EEEEEE;
+		  color: #333333;
+		  padding: 2px 6px 2px 6px;
+		  border-top: 1px solid #CCCCCC;
+		  border-right: 1px solid #333333;
+		  border-bottom: 1px solid #333333;
+		  border-left: 1px solid #CCCCCC;
+		}
+		#question{
+			position: relative;
+			bottom: 680px;
+			left: 750px;
+		}
+		#student{
+			position: relative;
+			bottom: 680px;
+			left: 750px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id=addquestion>
+		<p style="font-size: 23px"><b>Add Question</b></p>
+			<div id='Blank'>
+				Blank Type Question<br>
+				<form action="{% url 'safe_app:addblank' quiz.id %}" method="post">
+				{% csrf_token %}
+					<textarea rows="7" cols="70" name="question">Enter text here...</textarea> &nbsp
+					<button type="submit">Add</button> <br><br>
+				</form>
+			</div>
+			<div id='TrueFalse'>
+				True False Type Question<br>
+				<form action="{% url 'safe_app:addtruefalse' quiz.id %}" method="post">
+				{% csrf_token %}
+					<textarea rows="7" cols="70" name="question">Enter text here...</textarea> &nbsp
+					<button type="submit">Add</button> <br><br>
+				</form>
+			</div>
+			<div id='MultipleChoice'>
+				Multiple Choice Type Question<br>
+				<form action="{% url 'safe_app:addmultiplechoice' quiz.id %}" method="post">
+				{% csrf_token %}
+					<textarea rows="7" cols="70" name="question">Enter text here...</textarea> <br>
+					<textarea rows="2" cols="70" name="option1">Enter Option1 here...</textarea> <br>
+					<textarea rows="2" cols="70" name="option2">Enter Option2 here...</textarea> <br>
+					<textarea rows="2" cols="70" name="option3">Enter Option3 here...</textarea> <br>
+					<textarea rows="2" cols="70" name="option4">Enter Option4 here...</textarea> &nbsp
+					<button type="submit">Add</button>
+				</form>
+			</div>
+	</div>
+	<div id='question'>
+	<p style="font-size: 23px"><b>Questions</b></p>
+		{% for question in questions %}
+			<p>{{question.0}} &nbsp <a href="{% url 'safe_app:question' question.0 %}">{{question.2}}</a> &nbsp
+			<a href="{% url 'safe_app:removequestion' question.0 %}" class="remove">Delete</a></p>
+			
+		{% endfor %}
+	</div>
+	<br>
+	<div id='student'>
+		<p style="font-size: 23px"><b>Show student list</b> &nbsp <a href="{% url 'safe_app:showstudent' quiz.id %}">Click Here</a></p>
+		<b><p style="font-size: 23px">Add Student</p></b>
+			<div id='addStudent'>
+				<p style="font-size: 17px">1. Add Student Individually</p> 
+				<form action="{% url 'safe_app:addstudent' quiz.id %}" method="post">
+				{% csrf_token %}
+					<input type="text" placeholder="Enter LoginId" name="loginId" required> &nbsp
+					<input type="text" placeholder="Enter Password" name="password" required> &nbsp
+					<button type="submit">Add</button> <br><br>
+				</form>
+			</div>
+			<div id='newStudentFile'>
+				<p style="font-size: 17px">2. New Student File (allowed formats are .csv, .xlsx, .ods). <br> Already existing students will be deleted</p>
+				<form action="{% url 'safe_app:newstudentfile' quiz.id %}" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<select name='file_type'>
+						<option value='.xlsx'>.xlsx</option>
+						<option value='.csv'>.csv</option>
+						<option value='.ods'>.ods</option>
+					</select>
+					&nbsp
+					<input type="file" title='Upload file' name='file_name' id='file_name' required='required'> &nbsp
+					<input type="submit" value='upload'>  &nbsp &nbsp
+					{% if show1 %}
+						Something went wrong while uploading the file
+					{% endif %}
+				</form>	
+			</div>
+			<br>
+			<div id='addStudentFile'>
+				<p style="font-size: 17px">3. Add Student File (allowed formats are .csv, .xlsx, .ods). <br> Already existing students will be retained</p>
+				<form action="{% url 'safe_app:addstudentfile' quiz.id %}" method="post" enctype="multipart/form-data">
+				{% csrf_token %}
+					<select name='file_type'>
+						<option value='.xlsx'>.xlsx</option>
+						<option value='.csv'>.csv</option>
+						<option value='.ods'>.ods</option>
+					</select>
+					&nbsp
+					<input type="file" title='Upload file' name='file_name' id='file_name' required='required'> &nbsp
+					<input type="submit" value='upload'>  &nbsp &nbsp
+					{% if show1 %}
+						Something went wrong while uploading the file
+					{% endif %}
+				</form>	
+			</div>
+	</div>
+</body>

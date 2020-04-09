@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Safe App Quiz Clone</title>
+	<style type="text/css">
+		p.detail { color:#4C4C4C;font-weight:bold;font-family:Calibri;font-size:20 }
+		span.name { color:#FF0000;font-weight:bold;font-family:Tahoma;font-size:20 }
+	</style>
+</head>
+<body>
+
+<p class="detail">List of students registered for <span class="name">{{quiz.quiz_code}}</span> </p>
+<body>
+	{% for student in students %}
+		{{student.loginId}} <br>
+	{% endfor %}
+</body>
+
